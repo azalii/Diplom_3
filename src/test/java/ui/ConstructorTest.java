@@ -6,21 +6,18 @@ import org.example.MainPage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ConstructorTest extends BaseTest {
-    public WebDriver driver;
+
     private MainPage mainPage;
 
     @Before
     public void startUp() {
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
         mainPage = new MainPage(driver);
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(BASE_URL);
     }
 
     @Test
@@ -28,21 +25,21 @@ public class ConstructorTest extends BaseTest {
     public void testBun() {
         mainPage.clickSauceButton();
         mainPage.clickBunButton();
-        assertEquals(true, mainPage.isActiveBunButton());
+        assertTrue(mainPage.isActiveBunButton());
     }
 
     @Test
     @DisplayName("Переход к разделу «Соусы»")
     public void testSauce() {
         mainPage.clickSauceButton();
-        assertEquals(true, mainPage.isActiveSauceButton());
+        assertTrue(mainPage.isActiveSauceButton());
     }
 
     @Test
     @DisplayName("Переход к разделу «Начинки»")
     public void testFilling() {
         mainPage.clickFillingButton();
-        assertEquals(true, mainPage.isActiveFillingButton());
+        assertTrue(mainPage.isActiveFillingButton());
     }
 
     @After

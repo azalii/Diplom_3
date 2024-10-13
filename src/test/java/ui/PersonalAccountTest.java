@@ -1,19 +1,15 @@
 package ui;
 
 import api.client.User;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.junit4.DisplayName;
 import org.example.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class PersonalAccountTest extends BaseTest {
-    public WebDriver driver;
     private MainPage mainPage;
     private LoginPage loginPage;
     private PersonalAccountPage personalAccountPage;
@@ -24,15 +20,13 @@ public class PersonalAccountTest extends BaseTest {
 
     @Before
     public void startUp() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
         user = new User();
         user.register(email, password, name);
         mainPage = new MainPage(driver);
         personalAccountPage = new PersonalAccountPage(driver);
         loginPage = new LoginPage(driver);
 
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(BASE_URL);
         mainPage.clickLoginButton();
         loginPage.setEmail(email);
         loginPage.setPassword(password);
@@ -44,7 +38,7 @@ public class PersonalAccountTest extends BaseTest {
     public void testMoveFromMainPage() {
         mainPage.clickPersonalAccountButton();
         personalAccountPage.waitForLoad();
-        assertEquals(true, personalAccountPage.isDisplayed());
+        assertTrue(personalAccountPage.isDisplayed());
     }
 
     @Test
@@ -52,10 +46,10 @@ public class PersonalAccountTest extends BaseTest {
     public void testLogout() {
         mainPage.clickPersonalAccountButton();
         personalAccountPage.waitForLoad();
-        assertEquals(true, personalAccountPage.isDisplayed());
+        assertTrue(personalAccountPage.isDisplayed());
         personalAccountPage.clickLogoutButton();
         loginPage.waitForLoad();
-        assertEquals(true, loginPage.isDisplayed());
+        assertTrue(loginPage.isDisplayed());
     }
 
     @After
